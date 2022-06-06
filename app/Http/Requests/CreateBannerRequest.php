@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Hekmatinasser\Verta\Verta;
 
-class CreateProductRequest extends FormRequest
+class CreateBannerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,13 +26,10 @@ class CreateProductRequest extends FormRequest
     {
         return [
             'image' => 'required|image|max:15000|mimes:jpg,png,jpeg',
-            'productSlider' => 'array|require',
-            'productSlider.*' => 'image|mimes:jpg,png,jpeg|max:15000',
-            'title' => 'required|max:100',
-            'price' => 'required|numeric',
-            'size'=> 'required|array',
-            'description' => 'required|max:500',
-            'category_id' => 'required|integer'
+            'title' => 'required|string|max:200',
+            'persianDatapicker' => 'required|jdatetime|jdatetime_after',
+            'lastPrice' => 'required|numeric',
+            'newPrice' => 'required|numeric|lower_than:lastPrice'
         ];
     }
 }

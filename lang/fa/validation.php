@@ -79,6 +79,22 @@ return array(
     "exists_phone"     => "چنین شماره ای در سیستم ثبت نشده است",
     "recaptcha"        => "کپچا اعتبار لازم را ندارد",
     "string" => ":attribute باید رشته باشد.",
+    'jdate' => 'تاریخ شمسی معتبر نمی باشد.',
+    'jdate_equal' => ':attribute تاریخ شمسی برابر :date نمی باشد.',
+    'jdate_not_equal' => ':attribute تاریخ شمسی نامساوی :date نمی باشد.',
+    'jdatetime' => ' تاریخ و زمان شمسی معتبر نمی باشد.',
+    'jdatetime_equal' => ':attribute تاریخ و زمان شمسی مساوی :date نمی باشد.',
+    'jdatetime_not_equal' => ':attribute تاریخ و زمان شمسی نامساوی :date نمی باشد.',
+    'jdate_after' => ':attribute تاریخ شمسی باید بعد از :date باشد.',
+    'jdate_after_equal' => ':attribute تاریخ شمسی باید بعد یا برابر از :date باشد.',
+    'jdatetime_after' => ' تاریخ و زمان شمسی باید بعد از :date باشد.',
+    'jdatetime_after_equal' => ':attribute تاریخ و زمان شمسی باید بعد یا برابر از :date باشد.',
+    'jdate_before' => ':attribute تاریخ شمسی باید قبل از :date باشد.',
+    'jdate_before_equal' => ':attribute تاریخ شمسی باید قبل یا برابر از :date باشد.',
+    'jdatetime_before' => ':attribute تاریخ و زمان شمسی باید قبل از :date باشد.',
+    'jdatetime_before_equal' => ':attribute تاریخ و زمان شمسی باید قبل یا برابر از :date باشد.',
+    'lower_than' => 'مقدار فیلد :attribute باید کم تر از :param باشد',
+
 
     /*
     |--------------------------------------------------------------------------
@@ -175,6 +191,14 @@ return array(
         'author'=>'نام مسئول',
         'keywords'=>'کلیمات کلیدی',
         'fullname'=>'نام و نام خانوادگی',
-        'alt' => 'توضیحات'
+        'alt' => 'توضیحات',
+        'start_date' => 'تاریخ شروع',
+        'expire_datetime' => 'تاریخ انقضا',
+        'newPrice' => 'قیمت جدید',
+        'lastPrice' => 'قیمت قبلی',
+        'productSlider' => 'اسلاید های محصول'
     ),
+    'param' => array(
+        'lastPrice' => 'اخرین قیمت',
+    )
 );

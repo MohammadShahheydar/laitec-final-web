@@ -4,7 +4,7 @@
     <section class="container-fluid">
         <section class="row m-0 p-0">
             <section class="col-10 offset-1 mt-5">
-                <table class="table mt-5">
+                <table class="table mt-5 text-center">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -19,15 +19,18 @@
                             <tr>
                                 <th scope="row">{{ $category->id }}</th>
                                 <td>
-                                    {{$category->title}}
+                                    {!! Form::model($category , ['route' => ['category.update' , $category->title] , 'method' => 'PUT' , 'class' => 'py-1']) !!}
+                                    {!! Form::text('title' , $category->title , ['class' => 'form-control-sm disabled' , 'disabled' => true , 'id' => 'input'. $category->id]) !!}
+                                    {!! Form::submit('edit' , ['class' => 'btn btn-sm btn-info mb-1' , 'style'=> 'display:none']) !!}
+                                    {!! Form::close() !!}
                                 </td>
                                 <td>
                                     {{ $category->count }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('category.edit' , ['title' => $category->title]) }}">
+                                    <span id="btn-{{ $category->id }}">
                                         <i class="far fa-edit text-info btn"></i>
-                                    </a>
+                                    </span>
                                 </td>
                                 <td>
                                     <a mark href="{{ route('category.destroy' , $category->title) }}">
@@ -74,5 +77,18 @@
         $('button#plus').on('click', function (event) {
             $('#create-new-category').slideDown();
         })
+
+        $('a[mark]').on('click' , function (evnet) {
+            event.preventDefault()
+            $(this).siblings('form').submit()
+        })
+
+        $('td>span').on('click' , function (evnet) {
+            $(this).parent().siblings('td').first().children(0).children('.form-control-sm').prop('disabled' , false)
+            $(this).parent().siblings('td').first().children(0).children('.btn').fadeIn()
+        })
+        function enableInput(event) {
+            console.log($(this))
+        }
     </script>
 @endsection

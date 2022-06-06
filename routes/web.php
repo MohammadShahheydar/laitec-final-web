@@ -22,18 +22,15 @@ Route::middleware('auth')->prefix('/panel')->group(function () {
     Route::post('/slider/index/{id}' , [\App\Http\Controllers\Admin\SliderController::class , 'ajaxIndex'])->name('ajax-index');
     Route::resource('/category' , \App\Http\Controllers\Admin\CategoryController::class)->except('create')->parameter('category' , 'title');
     Route::resource('/product' , \App\Http\Controllers\Admin\ProductController::class)->parameter('product' , 'title');
-    Route::get('/product/create/{id}' , [\App\Http\Controllers\Admin\ProductController::class , 'create'])->name('product.create');
+    Route::get('/product/create/{title}' , [\App\Http\Controllers\Admin\ProductController::class , 'create'])->name('product.create');
+    Route::resource('/banner' , \App\Http\Controllers\Admin\BannerController::class)->parameter('banner' , 'title');
 });
 
 Route::get('/', [\App\Http\Controllers\IndexController::class , 'index'])->name('index');
 
-Route::get('/shop', function () {
-    return view('front.shop');
-})->name('shop');
+Route::get('/shop', [\App\Http\Controllers\ShopController::class , 'index'] )->name('shop');
 
-Route::get('/showProduct', function () {
-    return view('front.showProduct');
-})->name('showProduct');
+Route::get('/product/{title}', [\App\Http\Controllers\ShopController::class , 'show'])->name('shop.show');
 
 Route::get('/checkOut', function () {
     return view('front.checkOut');

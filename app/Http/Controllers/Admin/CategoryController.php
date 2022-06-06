@@ -52,9 +52,8 @@ class CategoryController extends Controller
      */
     public function show($title)
     {
-        $categoryID = Category::where('title' , '=' , $title)->first()->id;
         $products = Category::where('title', '=', $title)->first()->products;
-        return view('back.category.show' , compact('products' , 'categoryID'));
+        return view('back.category.show' , compact('products' , 'title'));
     }
 
     /**
@@ -77,7 +76,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $title)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required|max:40|string'
+        ]);
+        Category::where('title' , '=' , $title)->first()->update([
+            'title' => $data['title']
+        ]);
+        return redirect()->route('category.index');
     }
 
     /**
@@ -88,6 +93,7 @@ class CategoryController extends Controller
      */
     public function destroy($title)
     {
-        //
+        Category::where('title' , '=' , $title)->first()->delete();
+        return redirect()->route('category.index');
     }
 }

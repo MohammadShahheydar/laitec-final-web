@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,7 +21,7 @@
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3"
-               href="{{ url("index.html") }}">{{ \Illuminate\Support\Facades\Auth::user()->name }}</a>
+               href="{{ route('panel') }}">{{ \Illuminate\Support\Facades\Auth::user()->name }}</a>
             <!-- Sidebar Toggle-->\Illuminate\Suppo
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"
                     href="{{ url("#!") }}"><i class="fas fa-bars"></i></button>
@@ -60,7 +61,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="{{ url("index.html") }}">
+                            <a class="nav-link" href="{{ route('panel') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
@@ -85,7 +86,7 @@
                                     @endforeach
                                     <a class="nav-link" href="{{ route('category.index') }}">
                                         Manage Categories
-                                        <div class="sb-nav-link-icon"><i class="fas fa-wrench"></i></div>
+                                        <div class="px-3 sb-nav-link-icon"><i class="fas fa-wrench"></i></div>
                                     </a>
                                 </nav>
                             </div>
@@ -135,7 +136,7 @@
                                          data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link" href="{{ route('slider.index') }}">Slider</a>
-                                            <a class="nav-link" href="{{ url("register.html") }}">Banner</a>
+                                            <a class="nav-link" href="{{ route('banner.create') }}">Banner</a>
                                         </nav>
                                     </div>
                                     <a class="nav-link collapsed" href="{{ url("#") }}" data-bs-toggle="collapse"

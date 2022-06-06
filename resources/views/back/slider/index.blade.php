@@ -11,10 +11,9 @@
     <section class="container-fluid">
         <section class="row m-0 p-0">
             <section class="col-10 offset-1 mt-5">
-                <table class="table mt-5">
+                <table class="text-center table table-hover table-bordered mt-5">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col">Image</th>
                             <th scope="col">Alt</th>
                             <th scope="col">Index</th>
@@ -25,9 +24,8 @@
                     <tbody>
                         @forelse($sliders as $slider)
                             <tr>
-                                <th scope="row">{{ $slider->id }}</th>
                                 <td>
-                                    <img style="height: 200px; width: 200px;"
+                                    <img style="height: 200px; width: 100%;"
                                          class="img-thumbnail shadow rounded d-block"
                                          src="{{ asset('images/slider/'.$slider->image) }}" alt="{{ $slider->alt }}">
                                 </td>

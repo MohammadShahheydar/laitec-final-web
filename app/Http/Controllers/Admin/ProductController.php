@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\FileController;
 use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductSlider;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -19,7 +22,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -27,8 +30,9 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create($title)
     {
+        $id = Category::where('title' , '=' , $title)->first()->id;
         return view('back.product.create' , compact('id'));
     }
 
@@ -40,21 +44,30 @@ class ProductController extends Controller
      */
     public function store(CreateProductRequest $request)
     {
-//        dd($request->file('image'))
-        $sizes = explode(',' , $request->input('size'));
-        foreach ($sizes as $size) {
-            $size = trim($size);
-        }
+        $productSliders = $request->file('productSlider');
+        $sizes = $request->input('size');
+        $sizes = array_map('trim' , $sizes);
 
         $imageName = $this->uploadFile($request->file('image') , 'images/product');
 
         $product = Product::create([
             'size' => json_encode($sizes) ,
             'title' => $request->input('title'),
+            'price' => $request->input('price'),
+
             'description' => $request->input('description'),
             'category_id' => $request->input('category_id'),
             'image' => $imageName
         ]);
+
+        foreach ($productSliders as $productSlider) {
+            $imageName = $this->uploadFile($productSlider , 'images/productSlider/');
+
+            ProductSlider::create([
+                'image' => $imageName,
+                'product_id' => $product->id
+            ]);
+        }
 
         return redirect()->route('category.show' , $product->category->title);
     }
@@ -76,9 +89,11 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($title)
     {
-        //
+        $product = Product::where('title' , '=' , $title)->first();
+        $category = Category::all()->pluck('title' , 'id');
+        return view ('back.product.edit' , compact('product' , 'category'));
     }
 
     /**
@@ -88,9 +103,48 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $title)
     {
-        //
+        $product = null;
+        $image = $request->file('image');
+        $productSliders = $request->file('productSlider');
+
+        $sizes = $request->input('size');
+        $sizes = array_map('trim' , $sizes);
+
+        if (isset($image) && !empty($image)) {
+            $product = Product::where('title' , '=' , $title)->first();
+            $oldImage = $product->image;
+            $this->deleteFile('/images/products/'.$oldImage);
+            $newImage = $this->uploadFile($request->input('image') , '/images/products/');
+            $product->update([
+                'image' => $newImage,
+                'size' => json_encode($sizes),
+                'title' => $request->title ,
+                'price' => $request->input('price'),
+
+                'category_id' => $request->category_id ,
+                'description' => $request->description ,
+            ]);
+        } else {
+            $product = Product::where('title', '=', $title)->first();
+           $product->update([
+               'size' => json_encode($sizes),
+               'title' => $request->title ,
+               'price' => $request->input('price'),
+               'category_id' => $request->category_id ,
+               'description' => $request->description ,
+           ]);
+        }
+
+        if(isset($productSliders) && !empty($productSliders) && $productSliders !== null) {
+            $oldProductSlider = $product->productSliders();
+
+        }
+
+        $categoryTitle = Category::findOrFail($request->category_id)->title;
+
+        return redirect()->route('category.show' , $categoryTitle);
     }
 
     /**
@@ -99,8 +153,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($title)
     {
-        //
+        $product = Product::where('title' , '=' , $title)->first();
+        $oldImage = $product->image;
+        $this->deleteFile('images/product/'. $oldImage);
+        $product->delete();
+
+        return redirect()->route('category.show' , $product->category->title);
     }
 }

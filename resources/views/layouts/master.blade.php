@@ -29,7 +29,7 @@
                     <ul id="menu-content" class="menu-content collapse out">
                         <!-- Single Item -->
                         <li data-toggle="collapse" data-target="#women" class="collapsed active">
-                            <a href="#">Woman wear <span class="arrow"></span></a>
+                            <a href="#">WoCn wear <span class="arrow"></span></a>
                             <ul class="sub-menu collapse" id="women">
                                 <li><a href="#">Midi Dresses</a></li>
                                 <li><a href="#">Maxi Dresses</a></li>
@@ -185,8 +185,7 @@
                                                     <div class="dropdown-menu" aria-labelledby="karlDropdown">
                                                         <a class="dropdown-item" href="{{ route('index') }}">Home</a>
                                                         <a class="dropdown-item" href="{{ route('shop') }}">Shop</a>
-                                                        <a class="dropdown-item" href="{{ route('showProduct') }}">Product
-                                                            Details</a>
+                                                        <a class="dropdown-item" href="{{ route('shop.show' , ['title' => 'test']) }}">Product Details</a>
                                                         <a class="dropdown-item" href="{{ route('cart') }}">Cart</a>
                                                         <a class="dropdown-item" href="{{ route('checkOut') }}">Checkout</a>
                                                     </div>
