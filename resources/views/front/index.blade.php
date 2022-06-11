@@ -6,7 +6,7 @@
         <div class="welcome_slides owl-carousel">
             @forelse($slider as $item)
                 <!-- Single Slide Start -->
-                    <div class="single_slide height-800 bg-img background-overlay" style="background-image: url({{ asset('images/slider/'.$item->image) }});">
+                    <div class="single_slide height-800 bg-img background-overlay" style="background-image: url('{{ asset("images/slider/".$item->image->image) }}');">
                         <div class="container h-100">
                             <div class="row h-100 align-items-center">
                                 <div class="col-12">
@@ -20,6 +20,7 @@
                         </div>
                     </div>
             @empty
+
             @endforelse
         </div>
     </section>
@@ -161,7 +162,7 @@
                             <h4 class="product-price">{{ $product->price }}</h4>
                             <p>Jeans midi cocktail dress</p>
                             <!-- Add to Cart -->
-                            <a href="#" class="add-to-cart-btn">ADD TO CART</a>
+                            <a href="{{ route('shop.show' , $product->title) }}" class="add-to-cart-btn">ADD TO CART</a>
                         </div>
                     </div>
                 @empty

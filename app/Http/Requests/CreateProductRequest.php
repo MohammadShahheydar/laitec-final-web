@@ -24,14 +24,15 @@ class CreateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'required|image|max:15000|mimes:jpg,png,jpeg',
-            'productSlider' => 'array|require',
-            'productSlider.*' => 'image|mimes:jpg,png,jpeg|max:15000',
+            'image' => 'required|image|max:15000',
+            'productSlider' => 'array',
+            'productSlider.*' => 'image|max:15000',
             'title' => 'required|max:100',
             'price' => 'required|numeric',
             'size'=> 'required|array',
             'description' => 'required|max:500',
-            'category_id' => 'required|integer'
+            'category_id' => 'required|integer',
+            'deletedSlider' => 'string'
         ];
     }
 }

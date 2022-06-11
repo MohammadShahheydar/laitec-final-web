@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\FileController;
 use App\Http\Requests\CreateSliderRequest;
+use App\Jobs\ForceDelete;
+use App\Models\Image;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class SliderController extends Controller
@@ -21,7 +24,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $sliders = Slider::all();
+        $sliders = Slider::with('image')->get();
         return view('back.slider.index', compact('sliders'));
     }
 
@@ -43,11 +46,17 @@ class SliderController extends Controller
      */
     public function store(CreateSliderRequest $request)
     {
+
         $imageName = $this->uploadFile($request->file('image'), 'images/slider');
 
-        Slider::create([
-            'image' => $imageName,
+        $slider = Slider::create([
             'alt' => $request->input('alt'),
+        ]);
+
+        Image::create([
+            'image' => $imageName,
+            'imageable_type' => Slider::class,
+            'imageable_id' => $slider->id
         ]);
 
         return redirect()->route('slider.index');
@@ -72,7 +81,8 @@ class SliderController extends Controller
      */
     public function edit($id)
     {
-        dd('test');
+        $slider = Slider::findOrFail($id);
+        return view ('back.slider.edit' , compact('slider'));
     }
 
     /**
@@ -84,7 +94,26 @@ class SliderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd('test');
+        if($request->file('image')) {
+            $slider = Slider::findOrFail($id);
+            $slider->update([
+                'alt' => $request->input('alt'),
+            ]);
+
+            $this->deleteFile('images/slider/'.$slider->image->image);
+            $imageName = $this->uploadFile($request->file('image'), 'images/slider/');
+
+            $slider->image()->update([
+                'image' => $imageName
+            ]);
+
+        } else {
+            Slider::findOrFail($id)->update([
+                'alt' => $request->input('alt')
+            ]);
+        }
+
+        return redirect()->route('slider.index');
     }
 
     /**
@@ -95,10 +124,14 @@ class SliderController extends Controller
      */
     public function destroy($id)
     {
-        $file = Slider::findOrFail($id);
-        $this->deleteFile('images/slider/' . $file->image);
-        $file->delete();
+        $slider = Slider::findOrFail($id);
+        $slider->delete();
+        ForceDelete::dispatch($slider, 'images/slider/' . $slider->image->image, $slider->image)->delay(now()->addMonth());
         return redirect()->route('slider.index');
+    }
+
+    public function restore() {
+
     }
 
     public function ajaxIndex(Request $request, $id)

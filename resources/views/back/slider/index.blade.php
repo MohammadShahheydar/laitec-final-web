@@ -27,7 +27,7 @@
                                 <td>
                                     <img style="height: 200px; width: 100%;"
                                          class="img-thumbnail shadow rounded d-block"
-                                         src="{{ asset('images/slider/'.$slider->image) }}" alt="{{ $slider->alt }}">
+                                         src="{{ asset('images/slider/'.$slider->image->image) }}" alt="{{ $slider->alt }}">
                                 </td>
                                 <td>{{$slider->alt}}</td>
                                 <td>

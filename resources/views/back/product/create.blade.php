@@ -34,7 +34,7 @@
                             <div class="upload__btn-box">
                                 <label class="upload__btn form-control">
                                     <p>Upload Product Slider Image</p>
-                                    <input type="file" name="productSlider[]" multiple="true" data-max_length="20" class="upload__inputfile">
+                                    <input type="file" name="productSlider[]" multiple="true" data-max_length="8" class="upload__inputfile">
                                 </label>
                             </div>
                             <div class="upload__img-wrap"></div>

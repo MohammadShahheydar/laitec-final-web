@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
+use App\Jobs\ForceDelete;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -93,7 +94,7 @@ class CategoryController extends Controller
      */
     public function destroy($title)
     {
-        Category::where('title' , '=' , $title)->first()->delete();
+        ForceDelete::dispatch(Category::where('title' , '=' , $title)->first())->delay(now()->addMonth());
         return redirect()->route('category.index');
     }
 }

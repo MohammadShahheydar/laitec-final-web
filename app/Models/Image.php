@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ProductSlider extends Model
+class Image extends Model
 {
     use HasFactory , SoftDeletes;
 
     protected $guarded = ['id'];
+
+    public function imageable() {
+        return $this->morphTo();
+    }
 }

@@ -11,4 +11,8 @@ class Slider extends Model
     use HasFactory , SoftDeletes;
 
     protected $guarded = ['id'];
+
+    public function image() {
+        return $this->morphOne(Image::class , 'imageable');
+    }
 }

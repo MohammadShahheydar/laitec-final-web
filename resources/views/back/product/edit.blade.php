@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="file-upload-content">
-                        <img class="file-upload-image" src="#" alt="your image"/>
+                        <img class="file-upload-image" src="{{ asset('images/product/'.$product->image) }}" alt="your image"/>
                         <div class="image-title-wrap">
                             <button type="button" onclick="removeUpload()" class="remove-image">Remove <span
                                     class="image-title">Uploaded Image</span></button>
@@ -42,7 +42,17 @@
                                     <input type="file" name="productSlider[]" multiple="true" data-max_length="20" class="upload__inputfile">
                                 </label>
                             </div>
-                            <div class="upload__img-wrap"></div>
+                            <div class="upload__img-wrap">
+                                @forelse($product->productSliders as $slide)
+                                    <div class='upload__img-box'>
+                                        <div style='border-radius: 4px;background-image: url("{{ asset('images/productSlider/'.$slide->image) }}")' data-imageName='{{ $slide->image }}' class='img-bg'>
+                                            <div class='upload__img-close'>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @empty
+                                @endforelse
+                            </div>
                         </div>
                     </section>
                     {{--                   Product slider--}}
@@ -119,7 +129,8 @@
     <script src="{{ asset('back/js/jquery-3.6.0.min.js') }}"></script>
 
     <script>
-
+        $('.image-upload-wrap').hide();
+        $('.file-upload-content').show();
         $('section.form-floating>input[placeholder="size"]').on('change', function (event) {
             let countInput = $(this).parent().siblings(0).children(0)[0];
             console.log(countInput)
@@ -169,5 +180,88 @@
         $('.image-upload-wrap').bind('dragleave', function () {
             $('.image-upload-wrap').removeClass('image-dropping');
         });
+    </script>
+
+    <script>
+        var deletedSlider = '';
+        jQuery(document).ready(function () {
+            ImgUpload();
+        });
+
+        function ImgUpload() {
+            var imgWrap = "";
+            var imgArray = [];
+
+            $('.upload__inputfile').each(function () {
+                $(this).on('change', function (e) {
+                    imgWrap = $(this).closest('.upload__box').find('.upload__img-wrap');
+                    var maxLength = $(this).attr('data-max_length');
+
+                    var files = e.target.files;
+                    var filesArr = Array.prototype.slice.call(files);
+                    var iterator = 0;
+                    filesArr.forEach(function (f, index) {
+
+                        if (!f.type.match('image.*')) {
+                            return;
+                        }
+
+                        if (imgArray.length > maxLength) {
+                            return false
+                        } else {
+                            var len = 0;
+                            for (var i = 0; i < imgArray.length; i++) {
+                                if (imgArray[i] !== undefined) {
+                                    len++;
+                                }
+                            }
+                            if (len > maxLength) {
+                                return false;
+                            } else {
+                                imgArray.push(f);
+
+                                var reader = new FileReader();
+                                reader.onload = function (e) {
+                                    var html = "<div class='upload__img-box'><div style='border-radius: 4px;background-image: url(" + e.target.result + ")' data-number='" + $(".upload__img-close").length + "' data-file='" + f.name + "' class='img-bg'><div class='upload__img-close'></div></div></div>";
+                                    imgWrap.append(html);
+                                    iterator++;
+                                }
+                                reader.readAsDataURL(f);
+                            }
+                        }
+                    });
+                });
+            });
+
+            $('body').on('click', ".upload__img-close", function (e) {
+                var file = $(this).parent().data("file");
+                for (var i = 0; i < imgArray.length; i++) {
+                    if (imgArray[i].name === file) {
+                        imgArray.splice(i, 1);
+                        break;
+                    }
+                }
+                $(this).parent().parent().remove();
+                if($(this).parent().data('imagename')) {
+                    deletedSlider += '|.|'
+                    deletedSlider += $(this).parent().data('imagename')
+                    deletedSlider += '|.|'
+                }
+            });
+        }
+
+        let form = $('form:eq(2)');
+        form.on('submit' , function (event) {
+            event.preventDefault()
+            console.log(form)
+            $('<input>').attr({
+                type: 'hidden',
+                id: 'foo',
+                name: 'deletedSlider',
+                value: deletedSlider
+            }).appendTo(form);
+
+            $(this).unbind('submit').submit();
+        })
     </script>
 @endsection

@@ -47,7 +47,7 @@ class Product extends Model
     }
 
     public function productSliders () {
-        return $this->hasMany(ProductSlider::class);
+        return $this->morphMany(Image::class , 'imageable');
     }
 
 }

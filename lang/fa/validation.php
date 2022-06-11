@@ -196,7 +196,7 @@ return array(
         'expire_datetime' => 'تاریخ انقضا',
         'newPrice' => 'قیمت جدید',
         'lastPrice' => 'قیمت قبلی',
-        'productSlider' => 'اسلاید های محصول'
+        'productSlider.*' => 'اسلاید های محصول'
     ),
     'param' => array(
         'lastPrice' => 'اخرین قیمت',
