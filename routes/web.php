@@ -32,6 +32,8 @@ Route::get('/shop', [\App\Http\Controllers\ShopController::class , 'index'] )->n
 
 Route::get('/product/{title}', [\App\Http\Controllers\ShopController::class , 'show'])->name('shop.show');
 
+Route::get('/category/{title}' , [\App\Http\Controllers\ShopController::class , 'showCategory'])->name('category.show');
+
 Route::get('/checkOut', function () {
     return view('front.checkOut');
 })->name('checkOut');

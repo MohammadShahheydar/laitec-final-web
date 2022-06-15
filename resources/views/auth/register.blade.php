@@ -11,16 +11,34 @@
                         <div class="card-body">
                             <form id="register-form" method="POST" action="{{ route('register') }}">
                                 @csrf
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" name="name" id="inputEmail" type="text"
-                                           placeholder="name@example.com" value="{{ old('name') }}"/>
-                                    <label for="inputEmail">Name</label>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" name="name" id="inputEmail" type="text"
+                                                   placeholder="name@example.com" value="{{ old('name') }}"/>
+                                            <label for="inputEmail">Name</label>
+                                        </div>
+                                        @error('name')
+                                        <div class="mb-3 alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select style="line-height: 2.8" class="form-select" name="role" id="role"
+                                                aria-label="Default select example">
+                                            @forelse($roles as $key => $value)
+                                                <option value="{{ $key }}">{{ $value  }}</option>
+                                            @empty
+                                            @endforelse
+                                        </select>
+                                        @error('role')
+                                        <div class="mb-3 mt-3 alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-                                @error('name')
-                                <div class="mb-3 alert alert-danger">{{ $message }}</div>
-                                @enderror
+
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" name="email" value="{{ old('email') }}" id="inputEmail" type="email"
+                                    <input class="form-control" name="email" value="{{ old('email') }}" id="inputEmail"
+                                           type="email"
                                            placeholder="name@example.com"/>
                                     <label for="inputEmail">Email address</label>
                                 </div>
@@ -30,7 +48,8 @@
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3 mb-md-0">
-                                            <input class="form-control" name="password" id="inputPassword" type="password"
+                                            <input class="form-control" name="password" id="inputPassword"
+                                                   type="password"
                                                    placeholder="Create a password"/>
                                             <label for="inputPassword">Password</label>
                                         </div>
@@ -41,7 +60,8 @@
 
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3 mb-md-0">
-                                            <input class="form-control" name="password_confirmation" id="inputPasswordConfirm" type="password"
+                                            <input class="form-control" name="password_confirmation"
+                                                   id="inputPasswordConfirm" type="password"
                                                    placeholder="Confirm password"/>
                                             <label for="inputPasswordConfirm">Confirm Password</label>
                                         </div>

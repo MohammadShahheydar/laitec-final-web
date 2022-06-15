@@ -9,7 +9,7 @@ use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes , HasEagerLimit;
+    use HasFactory, SoftDeletes, HasEagerLimit;
 
     protected $guarded = ['id'];
 
@@ -27,27 +27,28 @@ class Product extends Model
         return json_decode($value);
     }
 
-    public function associateSize() {
-//        dd($this->size);
-        return json_decode( $this->size , true);
+    public function associateSize()
+    {
+        return json_decode($this->size, true);
     }
 
     public function showSize()
     {
-        $size = implode(',', array_map(function ($value , $key) {
-            return $key . " => " . $value ;
-        } , json_decode($this->size , true) , array_keys(json_decode($this->size , true))));
-
+        $size = implode(',', array_map(function ($value, $key) {
+            return $key . " => " . $value;
+        }, json_decode($this->size, true), array_keys(json_decode($this->size, true))));
 
         return $size;
     }
 
-    public function banner () {
+    public function banner()
+    {
         return $this->hasOne(Banner::class);
     }
 
-    public function productSliders () {
-        return $this->morphMany(Image::class , 'imageable');
+    public function productSliders()
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
 
 }

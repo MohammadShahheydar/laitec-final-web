@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@php
+    $style = "text-decoration: underline;color: red;"
+@endphp
+
 @section('content')
     <!-- ****** Quick View Modal Area Start ****** -->
     <div class="modal fade" id="quickview" tabindex="-1" role="dialog" aria-labelledby="quickview" aria-hidden="true">
@@ -29,36 +33,50 @@
                                             <i class="fa fa-star" aria-hidden="true"></i>
                                         </div>
                                         <h5 class="price">$120.99 <span>$130</span></h5>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia expedita quibusdam aspernatur, sapiente consectetur accusantium perspiciatis praesentium eligendi, in fugiat?</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia expedita
+                                            quibusdam aspernatur, sapiente consectetur accusantium perspiciatis
+                                            praesentium eligendi, in fugiat?</p>
                                         <a href="{{ url("#") }}">View Full Product Details</a>
                                     </div>
                                     <!-- Add to Cart Form -->
                                     <form class="cart" method="post">
                                         <div class="quantity">
-                                            <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                            <span class="qty-minus"
+                                                  onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i
+                                                    class="fa fa-minus" aria-hidden="true"></i></span>
 
-                                            <input type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1">
+                                            <input type="number" class="qty-text" id="qty" step="1" min="1" max="12"
+                                                   name="quantity" value="1">
 
-                                            <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                            <span class="qty-plus"
+                                                  onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i
+                                                    class="fa fa-plus" aria-hidden="true"></i></span>
                                         </div>
-                                        <button type="submit" name="addtocart" value="5" class="cart-submit">Add to cart</button>
+                                        <button type="submit" name="addtocart" value="5" class="cart-submit">Add to
+                                            cart
+                                        </button>
                                         <!-- Wishlist -->
                                         <div class="modal_pro_wishlist">
-                                            <a href="{{ url("wishlist.html") }}" target="_blank"><i class="ti-heart"></i></a>
+                                            <a href="{{ url("wishlist.html") }}" target="_blank"><i
+                                                    class="ti-heart"></i></a>
                                         </div>
                                         <!-- Compare -->
                                         <div class="modal_pro_compare">
-                                            <a href="{{ url("compare.html") }}" target="_blank"><i class="ti-stats-up"></i></a>
+                                            <a href="{{ url("compare.html") }}" target="_blank"><i
+                                                    class="ti-stats-up"></i></a>
                                         </div>
                                     </form>
 
                                     <div class="share_wf mt-30">
                                         <p>Share With Friend</p>
                                         <div class="_icon">
-                                            <a href="{{ url("#") }}"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                            <a href="{{ url("#") }}"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                            <a href="{{ url("#") }}"><i class="fa fa-facebook"
+                                                                        aria-hidden="true"></i></a>
+                                            <a href="{{ url("#") }}"><i class="fa fa-twitter"
+                                                                        aria-hidden="true"></i></a>
                                             <a href="{{ url("#") }}"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                                            <a href="{{ url("#") }}"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                            <a href="{{ url("#") }}"><i class="fa fa-google-plus"
+                                                                        aria-hidden="true"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -84,29 +102,32 @@
                                 <div class="menu-list">
                                     <ul id="menu-content2" class="menu-content collapse out">
                                         <!-- Single Item -->
-                                        <li data-toggle="collapse" data-target="#women2">
-                                            <a href="{{ url("#") }}">Woman wear</a>
-                                        </li>
-                                        <!-- Single Item -->
-                                        <li data-toggle="collapse" data-target="#man2" class="collapsed">
-                                            <a href="{{ url("#") }}">Man Wear</a>
-                                        </li>
-                                        <!-- Single Item -->
-                                        <li data-toggle="collapse" data-target="#kids2" class="collapsed">
-                                            <a href="{{ url("#") }}">Children</a>
-                                        </li>
-                                        <!-- Single Item -->
-                                        <li data-toggle="collapse" data-target="#bags2" class="collapsed">
-                                            <a href="{{ url("#") }}">Bags &amp; Purses</a>
-                                        </li>
-                                        <!-- Single Item -->
-                                        <li data-toggle="collapse" data-target="#eyewear2" class="collapsed">
-                                            <a href="{{ url("#") }}">Eyewear</a>
-                                        </li>
-                                        <!-- Single Item -->
-                                        <li data-toggle="collapse" data-target="#footwear2" class="collapsed">
-                                            <a href="{{ url("#") }}">Footwear</a>
-                                        </li>
+                                        @forelse($categories as $category)
+                                            <li data-toggle="collapse" data-target="#women2">
+                                                <a style="{{ ($category->title === $title) ? $style : "" }}" href="{{ route('category.show' , $category->title) }}">{{ ucwords($category->title) }}</a>
+                                            </li>
+                                        @empty
+                                        @endforelse
+                                        {{--                                        <!-- Single Item -->--}}
+                                        {{--                                        <li data-toggle="collapse" data-target="#man2" class="collapsed">--}}
+                                        {{--                                            <a href="{{ url("#") }}">Man Wear</a>--}}
+                                        {{--                                        </li>--}}
+                                        {{--                                        <!-- Single Item -->--}}
+                                        {{--                                        <li data-toggle="collapse" data-target="#kids2" class="collapsed">--}}
+                                        {{--                                            <a href="{{ url("#") }}">Children</a>--}}
+                                        {{--                                        </li>--}}
+                                        {{--                                        <!-- Single Item -->--}}
+                                        {{--                                        <li data-toggle="collapse" data-target="#bags2" class="collapsed">--}}
+                                        {{--                                            <a href="{{ url("#") }}">Bags &amp; Purses</a>--}}
+                                        {{--                                        </li>--}}
+                                        {{--                                        <!-- Single Item -->--}}
+                                        {{--                                        <li data-toggle="collapse" data-target="#eyewear2" class="collapsed">--}}
+                                        {{--                                            <a href="{{ url("#") }}">Eyewear</a>--}}
+                                        {{--                                        </li>--}}
+                                        {{--                                        <!-- Single Item -->--}}
+                                        {{--                                        <li data-toggle="collapse" data-target="#footwear2" class="collapsed">--}}
+                                        {{--                                            <a href="{{ url("#") }}">Footwear</a>--}}
+                                        {{--                                        </li>--}}
                                     </ul>
                                 </div>
                             </div>
@@ -116,10 +137,14 @@
                             <h6 class="widget-title mb-30">Filter by Price</h6>
                             <div class="widget-desc">
                                 <div class="slider-range">
-                                    <div data-min="0" data-max="3000" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="1350" data-label-result="Price:">
+                                    <div data-min="0" data-max="3000" data-unit="$"
+                                         class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
+                                         data-value-min="0" data-value-max="1350" data-label-result="Price:">
                                         <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                                        <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                        <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+                                        <span class="ui-slider-handle ui-state-default ui-corner-all"
+                                              tabindex="0"></span>
+                                        <span class="ui-slider-handle ui-state-default ui-corner-all"
+                                              tabindex="0"></span>
                                     </div>
                                     <div class="range-price">Price: 0 - 1350</div>
                                 </div>
@@ -198,166 +223,202 @@
                         <div class="row">
 
                             <!-- Single gallery Item -->
-                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.2s">
-                                <!-- Product Image -->
-                                <div class="product-img">
-                                    <img src="{{ asset("front/img/product-img/product-1.jpg") }}" alt="">
-                                    <div class="product-quicview">
-                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
+                            @forelse($products as $product)
+                                <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig"
+                                     data-wow-delay="0.2s">
+                                    <!-- Product Image -->
+                                    <div class="product-img">
+                                        <img src="{{ asset("images/product/".$product->image) }}" alt="">
+                                        <div class="product-quicview">
+                                        </div>
+                                    </div>
+                                    <!-- Product Description -->
+                                    <div class="product-description">
+                                        <h4 class="product-price">$39.90</h4>
+                                        <p>Jeans midi cocktail dress</p>
+                                        <!-- Add to Cart -->
+                                        <a href="{{ route('shop.show' , $product->title) }}" class="add-to-cart-btn">ADD TO CART</a>
                                     </div>
                                 </div>
-                                <!-- Product Description -->
-                                <div class="product-description">
-                                    <h4 class="product-price">$39.90</h4>
-                                    <p>Jeans midi cocktail dress</p>
-                                    <!-- Add to Cart -->
-                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
+                            @empty
+                            @endforelse
+{{--                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig"--}}
+{{--                                 data-wow-delay="0.2s">--}}
+{{--                                <!-- Product Image -->--}}
+{{--                                <div class="product-img">--}}
+{{--                                    <img src="{{ asset("front/img/product-img/product-1.jpg") }}" alt="">--}}
+{{--                                    <div class="product-quicview">--}}
+{{--                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i--}}
+{{--                                                class="ti-plus"></i></a>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <!-- Product Description -->--}}
+{{--                                <div class="product-description">--}}
+{{--                                    <h4 class="product-price">$39.90</h4>--}}
+{{--                                    <p>Jeans midi cocktail dress</p>--}}
+{{--                                    <!-- Add to Cart -->--}}
+{{--                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <!-- Single gallery Item -->--}}
+{{--                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig"--}}
+{{--                                 data-wow-delay="0.3s">--}}
+{{--                                <!-- Product Image -->--}}
+{{--                                <div class="product-img">--}}
+{{--                                    <img src="{{ asset("front/img/product-img/product-2.jpg") }}" alt="">--}}
+{{--                                    <div class="product-quicview">--}}
+{{--                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i--}}
+{{--                                                class="ti-plus"></i></a>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <!-- Product Description -->--}}
+{{--                                <div class="product-description">--}}
+{{--                                    <h4 class="product-price">$39.90</h4>--}}
+{{--                                    <p>Jeans midi cocktail dress</p>--}}
+{{--                                    <!-- Add to Cart -->--}}
+{{--                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <!-- Single gallery Item -->
-                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.3s">
-                                <!-- Product Image -->
-                                <div class="product-img">
-                                    <img src="{{ asset("front/img/product-img/product-2.jpg") }}" alt="">
-                                    <div class="product-quicview">
-                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                    </div>
-                                </div>
-                                <!-- Product Description -->
-                                <div class="product-description">
-                                    <h4 class="product-price">$39.90</h4>
-                                    <p>Jeans midi cocktail dress</p>
-                                    <!-- Add to Cart -->
-                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
+{{--                            <!-- Single gallery Item -->--}}
+{{--                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig"--}}
+{{--                                 data-wow-delay="0.4s">--}}
+{{--                                <!-- Product Image -->--}}
+{{--                                <div class="product-img">--}}
+{{--                                    <img src="{{ asset("front/img/product-img/product-3.jpg") }}" alt="">--}}
+{{--                                    <div class="product-quicview">--}}
+{{--                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i--}}
+{{--                                                class="ti-plus"></i></a>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <!-- Product Description -->--}}
+{{--                                <div class="product-description">--}}
+{{--                                    <h4 class="product-price">$39.90</h4>--}}
+{{--                                    <p>Jeans midi cocktail dress</p>--}}
+{{--                                    <!-- Add to Cart -->--}}
+{{--                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <!-- Single gallery Item -->
-                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.4s">
-                                <!-- Product Image -->
-                                <div class="product-img">
-                                    <img src="{{ asset("front/img/product-img/product-3.jpg") }}" alt="">
-                                    <div class="product-quicview">
-                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                    </div>
-                                </div>
-                                <!-- Product Description -->
-                                <div class="product-description">
-                                    <h4 class="product-price">$39.90</h4>
-                                    <p>Jeans midi cocktail dress</p>
-                                    <!-- Add to Cart -->
-                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
+{{--                            <!-- Single gallery Item -->--}}
+{{--                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig"--}}
+{{--                                 data-wow-delay="0.5s">--}}
+{{--                                <!-- Product Image -->--}}
+{{--                                <div class="product-img">--}}
+{{--                                    <img src="{{ asset("front/img/product-img/product-4.jpg") }}" alt="">--}}
+{{--                                    <div class="product-quicview">--}}
+{{--                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i--}}
+{{--                                                class="ti-plus"></i></a>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <!-- Product Description -->--}}
+{{--                                <div class="product-description">--}}
+{{--                                    <h4 class="product-price">$39.90</h4>--}}
+{{--                                    <p>Jeans midi cocktail dress</p>--}}
+{{--                                    <!-- Add to Cart -->--}}
+{{--                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <!-- Single gallery Item -->
-                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.5s">
-                                <!-- Product Image -->
-                                <div class="product-img">
-                                    <img src="{{ asset("front/img/product-img/product-4.jpg") }}" alt="">
-                                    <div class="product-quicview">
-                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                    </div>
-                                </div>
-                                <!-- Product Description -->
-                                <div class="product-description">
-                                    <h4 class="product-price">$39.90</h4>
-                                    <p>Jeans midi cocktail dress</p>
-                                    <!-- Add to Cart -->
-                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
+{{--                            <!-- Single gallery Item -->--}}
+{{--                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig"--}}
+{{--                                 data-wow-delay="0.6s">--}}
+{{--                                <!-- Product Image -->--}}
+{{--                                <div class="product-img">--}}
+{{--                                    <img src="{{ asset("front/img/product-img/product-5.jpg") }}" alt="">--}}
+{{--                                    <div class="product-quicview">--}}
+{{--                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i--}}
+{{--                                                class="ti-plus"></i></a>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <!-- Product Description -->--}}
+{{--                                <div class="product-description">--}}
+{{--                                    <h4 class="product-price">$39.90</h4>--}}
+{{--                                    <p>Jeans midi cocktail dress</p>--}}
+{{--                                    <!-- Add to Cart -->--}}
+{{--                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <!-- Single gallery Item -->
-                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.6s">
-                                <!-- Product Image -->
-                                <div class="product-img">
-                                    <img src="{{ asset("front/img/product-img/product-5.jpg") }}" alt="">
-                                    <div class="product-quicview">
-                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                    </div>
-                                </div>
-                                <!-- Product Description -->
-                                <div class="product-description">
-                                    <h4 class="product-price">$39.90</h4>
-                                    <p>Jeans midi cocktail dress</p>
-                                    <!-- Add to Cart -->
-                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
+{{--                            <!-- Single gallery Item -->--}}
+{{--                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig"--}}
+{{--                                 data-wow-delay="0.7s">--}}
+{{--                                <!-- Product Image -->--}}
+{{--                                <div class="product-img">--}}
+{{--                                    <img src="{{ asset("front/img/product-img/product-6.jpg") }}" alt="">--}}
+{{--                                    <div class="product-quicview">--}}
+{{--                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i--}}
+{{--                                                class="ti-plus"></i></a>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <!-- Product Description -->--}}
+{{--                                <div class="product-description">--}}
+{{--                                    <h4 class="product-price">$39.90</h4>--}}
+{{--                                    <p>Jeans midi cocktail dress</p>--}}
+{{--                                    <!-- Add to Cart -->--}}
+{{--                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <!-- Single gallery Item -->
-                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.7s">
-                                <!-- Product Image -->
-                                <div class="product-img">
-                                    <img src="{{ asset("front/img/product-img/product-6.jpg") }}" alt="">
-                                    <div class="product-quicview">
-                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                    </div>
-                                </div>
-                                <!-- Product Description -->
-                                <div class="product-description">
-                                    <h4 class="product-price">$39.90</h4>
-                                    <p>Jeans midi cocktail dress</p>
-                                    <!-- Add to Cart -->
-                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
+{{--                            <!-- Single gallery Item -->--}}
+{{--                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig"--}}
+{{--                                 data-wow-delay="0.8s">--}}
+{{--                                <!-- Product Image -->--}}
+{{--                                <div class="product-img">--}}
+{{--                                    <img src="{{ asset("front/img/product-img/product-7.jpg") }}" alt="">--}}
+{{--                                    <div class="product-quicview">--}}
+{{--                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i--}}
+{{--                                                class="ti-plus"></i></a>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <!-- Product Description -->--}}
+{{--                                <div class="product-description">--}}
+{{--                                    <h4 class="product-price">$39.90</h4>--}}
+{{--                                    <p>Jeans midi cocktail dress</p>--}}
+{{--                                    <!-- Add to Cart -->--}}
+{{--                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <!-- Single gallery Item -->
-                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.8s">
-                                <!-- Product Image -->
-                                <div class="product-img">
-                                    <img src="{{ asset("front/img/product-img/product-7.jpg") }}" alt="">
-                                    <div class="product-quicview">
-                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                    </div>
-                                </div>
-                                <!-- Product Description -->
-                                <div class="product-description">
-                                    <h4 class="product-price">$39.90</h4>
-                                    <p>Jeans midi cocktail dress</p>
-                                    <!-- Add to Cart -->
-                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
+{{--                            <!-- Single gallery Item -->--}}
+{{--                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig"--}}
+{{--                                 data-wow-delay="0.9s">--}}
+{{--                                <!-- Product Image -->--}}
+{{--                                <div class="product-img">--}}
+{{--                                    <img src="{{ asset("front/img/product-img/product-8.jpg") }}" alt="">--}}
+{{--                                    <div class="product-quicview">--}}
+{{--                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i--}}
+{{--                                                class="ti-plus"></i></a>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <!-- Product Description -->--}}
+{{--                                <div class="product-description">--}}
+{{--                                    <h4 class="product-price">$39.90</h4>--}}
+{{--                                    <p>Jeans midi cocktail dress</p>--}}
+{{--                                    <!-- Add to Cart -->--}}
+{{--                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <!-- Single gallery Item -->
-                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.9s">
-                                <!-- Product Image -->
-                                <div class="product-img">
-                                    <img src="{{ asset("front/img/product-img/product-8.jpg") }}" alt="">
-                                    <div class="product-quicview">
-                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                    </div>
-                                </div>
-                                <!-- Product Description -->
-                                <div class="product-description">
-                                    <h4 class="product-price">$39.90</h4>
-                                    <p>Jeans midi cocktail dress</p>
-                                    <!-- Add to Cart -->
-                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
-
-                            <!-- Single gallery Item -->
-                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="1s">
-                                <!-- Product Image -->
-                                <div class="product-img">
-                                    <img src="{{ asset("front/img/product-img/product-9.jpg") }}" alt="">
-                                    <div class="product-quicview">
-                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                    </div>
-                                </div>
-                                <!-- Product Description -->
-                                <div class="product-description">
-                                    <h4 class="product-price">$39.90</h4>
-                                    <p>Jeans midi cocktail dress</p>
-                                    <!-- Add to Cart -->
-                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>
-                                </div>
-                            </div>
+{{--                            <!-- Single gallery Item -->--}}
+{{--                            <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig"--}}
+{{--                                 data-wow-delay="1s">--}}
+{{--                                <!-- Product Image -->--}}
+{{--                                <div class="product-img">--}}
+{{--                                    <img src="{{ asset("front/img/product-img/product-9.jpg") }}" alt="">--}}
+{{--                                    <div class="product-quicview">--}}
+{{--                                        <a href="{{ url("#") }}" data-toggle="modal" data-target="#quickview"><i--}}
+{{--                                                class="ti-plus"></i></a>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <!-- Product Description -->--}}
+{{--                                <div class="product-description">--}}
+{{--                                    <h4 class="product-price">$39.90</h4>--}}
+{{--                                    <p>Jeans midi cocktail dress</p>--}}
+{{--                                    <!-- Add to Cart -->--}}
+{{--                                    <a href="{{ url("#") }}" class="add-to-cart-btn">ADD TO CART</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                     </div>
 
@@ -370,7 +431,6 @@
                             </ul>
                         </nav>
                     </div>
-
                 </div>
             </div>
         </div>
