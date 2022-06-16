@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -67,10 +66,12 @@
                             </a>
                             <div class="sb-sidenav-menu-heading">Interface</div>
                             @if (Route::has('register'))
-                                <a class="nav-link collapsed" href="{{ route('register') }}">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-user-plus"></i></div>
-                                    {{ __('Register') }}
-                                </a>
+                                @can('admin')
+                                    <a class="nav-link collapsed" href="{{ route('authorize.index') }}">
+                                        <div class="sb-nav-link-icon"><i class="fas fa-user-shield"></i></div>
+                                        {{ __('Authorization') }}
+                                    </a>
+                                @endcan
                             @endif
                             <a class="nav-link collapsed" href="{{ url("#") }}" data-bs-toggle="collapse"
                                data-bs-target="#collapseCategory" aria-expanded="false" aria-controls="collapseLayouts">
@@ -82,7 +83,8 @@
                                  data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     @foreach( $categories as $category)
-                                        <a class="nav-link" href="{{ route('category.show' , $category) }}">{{ $category }}</a>
+                                        <a class="nav-link"
+                                           href="{{ route('category.show' , $category) }}">{{ $category }}</a>
                                     @endforeach
                                     <a class="nav-link" href="{{ route('category.index') }}">
                                         Manage Categories
@@ -742,8 +744,8 @@
                 <!-- end comments -->
 
                 <!-- child content -->
-                @yield('content')
-                <!-- end child content -->
+            @yield('content')
+            <!-- end child content -->
 
                 <!-- footer -->
                 <footer class="py-4 bg-light mt-auto">
