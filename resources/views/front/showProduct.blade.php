@@ -9,12 +9,12 @@
                     <ol class="breadcrumb d-flex align-items-center">
                         <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
                         <li class="breadcrumb-item"><a
-                                href="{{ route('category.show' , $product->category->title) }}">{{ ucfirst($product->category->title) }}</a>
+                                href="{{ route('shop.category.show' , $product->category->title) }}">{{ ucfirst($product->category->title) }}</a>
                         </li>
                         <li class="breadcrumb-item active">{{ ucfirst($product->title) }}</li>
                     </ol>
                     <!-- btn -->
-                    <a href=href="{{ route('category.show' , $product->category->title) }}"
+                    <a href=href="{{ route('shop.category.show' , $product->category->title) }}"
                        lass="backToHome d-block"><i class="fa fa-angle-double-left"></i> Back to Category</a>
                 </div>
             </div>

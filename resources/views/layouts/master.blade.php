@@ -311,17 +311,18 @@
             <!-- ****** Footer Area End ****** -->
         </div>
 
+        @yield('js')
+
         <!-- jQuery (Necessary for All JavaScript Plugins) -->
         <script src="{{ asset('front/js/jquery/jquery-2.2.4.min.js') }}"></script>
         <!-- Popper js -->
         <script src="{{ asset('front/js/popper.min.js') }}"></script>
         <!-- Bootstrap js -->
         <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
-        <!-- Plugins js -->
-        <script src="{{ asset('front/js/plugins.js') }}"></script>
         <!-- Active js -->
         <script src="{{ asset('front/js/active.js') }}"></script>
+        <!-- Plugins js -->
+        <script src="{{ asset('front/js/plugins.js') }}"></script>
 
-        @yield('js')
     </body>
 </html>

@@ -28,7 +28,7 @@ class CreateProductRequest extends FormRequest
             'productSlider' => 'array',
             'productSlider.*' => 'image|max:15000',
             'title' => 'required|max:100',
-            'price' => 'required|numeric',
+            'price' => 'required|numeric|between:0,9999999',
             'size'=> 'required|array',
             'description' => 'required|max:500',
             'category_id' => 'required|integer',

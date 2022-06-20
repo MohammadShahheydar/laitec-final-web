@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Auth::routes();
 
 Route::middleware('auth')->prefix('/panel')->group(function () {
 
@@ -29,6 +28,10 @@ Route::middleware('auth')->prefix('/panel')->group(function () {
 
     Route::resource('/category', \App\Http\Controllers\Admin\CategoryController::class)
         ->except('create')->parameter('category', 'title');
+    Route::put('/category/{title}/restore' , [\App\Http\Controllers\Admin\CategoryController::class , 'restore'])
+        ->name('category.restore');
+    Route::delete('/category/{title}/force-delete' , [\App\Http\Controllers\Admin\CategoryController::class , 'forceDelete'])
+        ->name('category.force-delete');
 
     Route::resource('/product', \App\Http\Controllers\Admin\ProductController::class)
         ->parameter('product', 'title');
@@ -44,21 +47,31 @@ Route::middleware('auth')->prefix('/panel')->group(function () {
 
 });
 
-Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('index');
+Auth::routes();
 
-Route::get('/shop', [\App\Http\Controllers\ShopController::class, 'index'])->name('shop');
+Route::middleware('guest')->group(function () {
 
-Route::get('/product/{title}', [\App\Http\Controllers\ShopController::class, 'show'])->name('shop.show');
+    Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('index');
 
-Route::get('/category/{title}', [\App\Http\Controllers\ShopController::class, 'showCategory'])->name('category.show');
+    Route::get('/shop', [\App\Http\Controllers\ShopController::class, 'index'])->name('shop');
 
-Route::get('/checkOut', function () {
-    return view('front.checkOut');
-})->name('checkOut');
+    Route::get('/product/{title}', [\App\Http\Controllers\ShopController::class, 'show'])->name('shop.show');
 
-Route::get('/cart', function () {
-    return view('front.cart');
-})->name('cart');
+    Route::get('/category/{title}', [\App\Http\Controllers\ShopController::class, 'showCategory'])->name('shop.category.show');
+
+    Route::get('/checkOut', function () {
+        return view('front.checkOut');
+    })->name('checkOut');
+
+    Route::get('/cart', function () {
+        return view('front.cart');
+    })->name('cart');
+});
+
+Route::post('/test/test' , function () {
+    dd('logout');
+})->name('loglog')->middleware('auth');
+
 
 
 

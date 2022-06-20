@@ -104,7 +104,7 @@
                                         <!-- Single Item -->
                                         @forelse($categories as $category)
                                             <li data-toggle="collapse" data-target="#women2">
-                                                <a style="{{ ($category->title === $title) ? $style : "" }}" href="{{ route('category.show' , $category->title) }}">{{ ucwords($category->title) }}</a>
+                                                <a style="{{ ($category->title === $title) ? $style : "" }}" href="{{ route('shop.category.show' , $category->title) }}">{{ ucwords($category->title) }}</a>
                                             </li>
                                         @empty
                                         @endforelse

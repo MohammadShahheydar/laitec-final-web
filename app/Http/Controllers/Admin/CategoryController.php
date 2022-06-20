@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::get();
+        $categories = Category::withTrashed()->get();
         foreach ($categories as $category) {
             $category->setAttribute('count' , $category->products()->count());
         }
@@ -94,7 +94,21 @@ class CategoryController extends Controller
      */
     public function destroy($title)
     {
-        ForceDelete::dispatch(Category::where('title' , '=' , $title)->first())->delay(now()->addMonth());
+        $category = Category::where('title', '=', $title)->first();
+        $category->delete();
+        ForceDelete::dispatch($category)->delay(now()->addMinutes(20));
+        return redirect()->route('category.index');
+    }
+
+    public function restore ($title) {
+        $category = Category::withTrashed()->where('title' , '=' , $title)->first();
+        $category->restore();
+        return redirect()->route('category.index');
+    }
+
+    public function forceDelete($title) {
+        $category = Category::withTrashed()->where('title' , '=' , $title)->first();
+        $category->forceDelete();
         return redirect()->route('category.index');
     }
 }

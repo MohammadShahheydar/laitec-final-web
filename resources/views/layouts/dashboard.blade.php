@@ -44,10 +44,13 @@
                         <li>
                             <hr class="dropdown-divider"/>
                         </li>
-                        <li><a class="dropdown-item" href="{{ url("#!") }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">Logout</a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+
+                        <li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                 @csrf
+                                <input type="submit" class="dropdown-item" value="Logout">
+{{--                                <a class="dropdown-item" href="{{ url("#!") }}" onclick="event.preventDefault();--}}
+{{--                                                     document.getElementById('logout-form').submit();">Logout</a>--}}
                             </form>
                         </li>
                     </ul>
