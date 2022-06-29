@@ -15,7 +15,6 @@ class Product extends Model
 
     protected $casts = [
         'size' => 'array',
-        'color' => 'array'
     ];
 
     public function category()

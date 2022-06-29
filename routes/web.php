@@ -35,6 +35,10 @@ Route::middleware('auth')->prefix('/panel')->group(function () {
 
     Route::resource('/product', \App\Http\Controllers\Admin\ProductController::class)
         ->parameter('product', 'title');
+    Route::put('/product/{title}/restore' , [\App\Http\Controllers\Admin\ProductController::class , 'restore'])
+        ->name('product.restore');
+    Route::delete('/product/{title}/force-delete' , [\App\Http\Controllers\Admin\ProductController::class , 'forceDelete'])
+        ->name('product.force-delete');
 
     Route::get('/product/create/{title}', [\App\Http\Controllers\Admin\ProductController::class, 'create'])
         ->name('product.create');

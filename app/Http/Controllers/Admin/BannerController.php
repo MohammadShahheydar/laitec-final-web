@@ -36,7 +36,7 @@ class BannerController extends Controller
         if (Cache::get('banner')) {
             return redirect()->route('banner.index');
         }
-        $products = Product::get(['id' , 'image' , 'title' , 'description' , 'price']);
+        $products = Product::with('category')->get(['image' , 'title' , 'category_id' , 'price' , 'description']);
         return view('back.banner.create' , compact('products'));
     }
 

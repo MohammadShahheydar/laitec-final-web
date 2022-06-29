@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Jobs\ForceDelete;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -19,9 +20,9 @@ class CategoryController extends Controller
     {
         $categories = Category::withTrashed()->get();
         foreach ($categories as $category) {
-            $category->setAttribute('count' , $category->products()->count());
+            $category->setAttribute('count', $category->products()->count());
         }
-        return view ('back.category.index' , compact('categories'));
+        return view('back.category.index', compact('categories'));
     }
 
     /**
@@ -33,7 +34,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateCategoryRequest $request)
@@ -48,19 +49,21 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($title)
     {
-        $products = Category::where('title', '=', $title)->first()->products;
-        return view('back.category.show' , compact('products' , 'title'));
+//      Category::where("title" , $title)->first()->products()->withTrashed() <- withTrashed nemishe
+        $categoryId = Category::where('title', '=', $title)->first()->id;
+        $products = Product::withTrashed()->where('category_id', '=', $categoryId)->get();
+        return view('back.category.show', compact('products', 'title'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($title)
@@ -71,8 +74,8 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $title)
@@ -80,7 +83,7 @@ class CategoryController extends Controller
         $data = $request->validate([
             'title' => 'required|max:40|string'
         ]);
-        Category::where('title' , '=' , $title)->first()->update([
+        Category::where('title', '=', $title)->first()->update([
             'title' => $data['title']
         ]);
         return redirect()->route('category.index');
@@ -89,7 +92,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($title)
@@ -100,15 +103,15 @@ class CategoryController extends Controller
         return redirect()->route('category.index');
     }
 
-    public function restore ($title) {
-        $category = Category::withTrashed()->where('title' , '=' , $title)->first();
-        $category->restore();
+    public function restore($title)
+    {
+        Category::withTrashed()->where('title', '=', $title)->first()->restore();
         return redirect()->route('category.index');
     }
 
-    public function forceDelete($title) {
-        $category = Category::withTrashed()->where('title' , '=' , $title)->first();
-        $category->forceDelete();
+    public function forceDelete($title)
+    {
+        Category::withTrashed()->where('title', '=', $title)->first()->forceDelete();
         return redirect()->route('category.index');
     }
 }

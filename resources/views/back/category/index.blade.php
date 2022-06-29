@@ -34,7 +34,7 @@
                                 </td>
                                 <td>
                                     @if($category->deleted_at)
-                                        <a mark href="{{ route('category.restore' , $category->title) }}">
+                                        <a mark title="restore" href="{{ route('category.restore' , $category->title) }}">
                                             <i class="fas fa-trash-restore"></i>
                                         </a>
                                         {!! Form::open(['route' => ['category.restore' , $category->title] , 'method' => 'PUT']) !!}
@@ -47,7 +47,7 @@
                                 </td>
                                 <td>
                                     @if($category->deleted_at)
-                                        <a mark href="{{ route('category.force-delete' , $category->title) }}">
+                                        <a mark title="force delete" href="{{ route('category.force-delete' , $category->title) }}">
                                             <span style="color: red">
                                                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                             </span>

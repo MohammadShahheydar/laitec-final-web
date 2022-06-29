@@ -23,27 +23,6 @@ class AuthorizeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -100,8 +79,7 @@ class AuthorizeController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        $user->delete();
-        ForceDelete::dispatch($user)->delay(now()->addMonth());
+        $user->forceDelete();
         return redirect()->route('authorize.index');
     }
 }

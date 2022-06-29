@@ -187,4 +187,18 @@ class ProductController extends Controller
 
         return redirect()->route('category.show', $product->category->title);
     }
+
+    public function restore($title)
+    {
+        $product = Product::withTrashed()->where('title', $title)->first();
+        $product->restore();
+        return redirect()->route('category.show', $product->category->title);
+    }
+
+    public function forceDelete($title)
+    {
+        $product = Product::withTrashed()->where('title', $title)->first();
+        $product->forceDelete();
+        return redirect()->route('category.show', $product->category->title);
+    }
 }

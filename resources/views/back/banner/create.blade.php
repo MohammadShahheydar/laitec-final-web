@@ -43,8 +43,9 @@
                                     <tr>
                                         <th scope="col" style="width: 25%">Image</th>
                                         <th scope="col" style="width: 15%">Title</th>
+                                        <th scope="col" style="width: 15%">Category</th>
                                         <th scope="col" style="width: 5%">price</th>
-                                        <th scope="col">Description</th>
+                                        <th scope="col" style="width: 40%">Description</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,8 +56,11 @@
                                                      class="img-thumbnail shadow rounded d-block"
                                                      src="{{ asset('images/product/'.$product->image) }}" alt="your post">
                                             </td>
-                                            <td style="width: 20%">
+                                            <td style="width: 15%">
                                                 {{$product->title}}
+                                            </td>
+                                            <td style="width: 15%">
+                                                {{$product->category->title}}
                                             </td>
                                             <td style="width: 5%">
                                                 {{$product->price}}
